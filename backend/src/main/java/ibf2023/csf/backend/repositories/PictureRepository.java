@@ -4,7 +4,10 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.GroupOperation;
+import org.springframework.data.mongodb.core.aggregation.MatchOperation;
+import org.springframework.data.mongodb.core.query.Criteria;
 
+import java.util.Date;
 import java.util.List;
 
 import org.bson.Document;
@@ -39,21 +42,35 @@ public class PictureRepository {
 
 
 	/*
+		let filter = new Date();
+		filter.setDate(1)
+		filter.setHours(0,0,0,0)
+
 		db.travelpics.aggregate([
+			{$match : {date: {$gte: filter}}},
 			{$group: 
 				{
-					_id: { },
-					totalSize: { $sum: "$size" } 
+				_id: { },
+				totalSize: { $sum: "$size" } 
 				}
 			}
 		])
 	 */
+	@SuppressWarnings("deprecation")
 	public Long getCurrentSize() {
-		// TODO: fix it to get data for CURRENT MONTH only
+		Date filter = new Date();
+		filter.setDate(1);
+		filter.setHours(0);
+		filter.setMinutes(0);
+		filter.setSeconds(0);
+		System.out.println(">>> filter: " + filter);
+
+		MatchOperation match = Aggregation.match(Criteria.where("date").gte(filter));
+
 		GroupOperation group = Aggregation.group()
 					.sum("size").as("totalSize");
 					
-		Aggregation pipeline= Aggregation.newAggregation(group);
+		Aggregation pipeline= Aggregation.newAggregation(match, group);
 		AggregationResults<Document> results= mongoTemplate.aggregate(pipeline, "travelpics", Document.class);
 		List<Document> docList = results.getMappedResults();
 		return docList.get(0).getLong("totalSize");
