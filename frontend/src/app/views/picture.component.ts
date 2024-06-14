@@ -57,10 +57,7 @@ export class PictureComponent implements OnInit {
         this.pictureUrl = '';
         this.router.navigate(['/'])
       },
-      error: err => {
-        const errMsg = err.error
-        alert(errMsg)
-      }
+      error: err => {alert(err.error.message)}
     })
   }
 

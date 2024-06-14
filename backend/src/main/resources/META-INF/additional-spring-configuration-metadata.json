@@ -1,15 +1,5 @@
 {"properties": [
   {
-    "name": "s3.access.key",
-    "type": "java.lang.String",
-    "description": "A description for 's3.access.key'"
-  },
-  {
-    "name": "s3.secret.key",
-    "type": "java.lang.String",
-    "description": "A description for 's3.secret.key'"
-  },
-  {
     "name": "s3.key.secret",
     "type": "java.lang.String",
     "description": "A description for 's3.key.secret'"
@@ -28,5 +18,10 @@
     "name": "s3.region",
     "type": "java.lang.String",
     "description": "A description for 's3.region'"
+  },
+  {
+    "name": "pic.monthly.threshold.in.mb",
+    "type": "java.lang.String",
+    "description": "A description for 'pic.monthly.threshold.in.mb'"
   }
 ]}
