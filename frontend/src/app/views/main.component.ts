@@ -20,15 +20,15 @@ export class MainComponent {
   width: number = 500;
   height: number = 282;
   public videoOptions: MediaTrackConstraints = {
-    width: {exact: this.width},
-    height: {exact: this.height},
-    aspectRatio: {exact: (this.width/this.height)}
+    width: this.width,
+    height: this.height,
+    aspectRatio: this.width/this.height
   };
 
   changeHeight(event: any) {
     this.height = event.target.value;
-    this.videoOptions.height = {exact: event.target.value};
-    this.videoOptions.aspectRatio = {exact: this.width/event.target.value};
+    this.videoOptions.height = event.target.value;
+    this.videoOptions.aspectRatio = this.width/event.target.value;
 
     console.log('>>> height:', this.height)
     console.log('>>> width:', this.width)
