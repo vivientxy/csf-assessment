@@ -25,7 +25,7 @@ public class UploadController {
 	@Autowired
 	PictureService svc;
 
-	// TODO Task 5.2
+	// Task 5.2
 	// You may change the method signature by adding additional parameters and annotations.
 	// You cannot remove any any existing annotations and parameters from postUpload()
 	@PostMapping(path="/image/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
