@@ -1,10 +1,10 @@
 <!-- View 1 -->
 <div>
-    <div class="webcam">
+    <div>
         <webcam
             [height]="height"
             [width]="width"
-            
+            [videoOptions]="videoOptions"
             imageType="image/png"
             [trigger]="triggerObservable"
             (imageCapture)="handleImage($event)"

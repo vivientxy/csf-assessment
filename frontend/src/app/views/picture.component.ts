@@ -1,8 +1,7 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { dataToImage } from '../utils';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { UploadService } from '../upload.service';
 
 @Component({
@@ -54,7 +53,6 @@ export class PictureComponent implements OnInit {
     // send data to springboot
     this.svc.upload(formData).subscribe({
       next: resp => {
-        console.log('>>> resp:', resp)
         this.pictureUrl = '';
         this.router.navigate(['/'])
       },

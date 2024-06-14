@@ -63,7 +63,6 @@ public class PictureRepository {
 		filter.setHours(0);
 		filter.setMinutes(0);
 		filter.setSeconds(0);
-		System.out.println(">>> filter: " + filter);
 
 		MatchOperation match = Aggregation.match(Criteria.where("date").gte(filter));
 
