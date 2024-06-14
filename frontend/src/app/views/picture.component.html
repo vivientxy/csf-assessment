@@ -1,1 +1,22 @@
 <!-- View 2 -->
+<div>
+    <form>
+        <div>
+            <img [src]="picture">
+        </div>
+        <div>
+            <label for="title">Title:</label>
+            <br>
+            <input type="text" name="title" placeholder="Image title">
+        </div>
+        <div>
+            <label for="comments">Comments:</label>
+            <br>
+            <textarea name="comments" rows="5"></textarea>
+        </div>
+        <div>
+            <button type="button" (click)="back()">Back</button>
+            <button type="submit">Post</button>
+        </div>
+    </form>
+</div>

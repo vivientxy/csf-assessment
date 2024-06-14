@@ -1,1 +1,26 @@
 <!-- View 1 -->
+<div>
+    <!-- <form> -->
+        <div class="webcam">
+            <webcam
+                [height]="height"
+                [width]="width"
+                [videoOptions]="videoOptions"
+                imageType="image/png"
+                [trigger]="triggerObservable"
+                (imageCapture)="handleImage($event)"
+                (initError)="handleInitError($event)"
+            ></webcam>
+        </div>
+        <div>
+            <label for="aspect">Aspect:</label>
+            <input type="radio" name="aspect" value="16:9" (click)="changeHeight(282)" checked>16:9
+            <input type="radio" name="aspect" value="4:3" (click)="changeHeight(375)">4:3
+            <input type="radio" name="aspect" value="3:2" (click)="changeHeight(333)">3:2
+            <input type="radio" name="aspect" value="1:1" (click)="changeHeight(500)">1:1
+        </div>
+        <div>
+            <button type="button" (click)="snap()">Snap</button>
+        </div>
+    <!-- </form> -->
+</div>

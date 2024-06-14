@@ -9,5 +9,10 @@ export class PictureComponent {
 
   // TODO: Task 2
   // TODO: Task 3
+  picture!: ImageData;
+
+  back() {
+    
+  }
 
 }
