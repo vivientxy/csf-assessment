@@ -1,21 +1,22 @@
 # Build Angular project:
-FROM node:21 AS ng-builder
+FROM node:22 AS ng-builder
 
-RUN npm i -g @angular/cli
+WORKDIR /frontend
 
-WORKDIR /ngapp
+RUN npm i -g @angular/cli@17.3.8
 
 COPY frontend/angular.json .
 COPY frontend/package*.json .
-COPY frontend/tsconfig.* .
+COPY frontend/tsconfig*.json .
 COPY frontend/src src
 
-RUN npm ci && ng build
+RUN npm ci 
+RUN ng build
 
 # Build SpringBoot project:
 FROM maven:3-eclipse-temurin-21 AS sb-builder
 
-WORKDIR /sbapp
+WORKDIR /backend
 
 COPY backend/mvnw .
 COPY backend/mvnw.cmd .
@@ -23,16 +24,17 @@ COPY backend/pom.xml .
 COPY backend/.mvn .mvn
 COPY backend/src src
 
-COPY --from=ng-builder /ngapp/dist/frontend/browser /src/main/resources/static
+COPY --from=ng-builder /frontend/dist/frontend/browser/ src/main/resources/static
 
+RUN chmod a+x mvnw 
 RUN mvn package -Dmaven.test.skip=true
 
 # Build Java .jar file
-FROM openjdk:21-jdk-bullseye
+FROM openjdk:21
 
 WORKDIR /app 
 
-COPY --from=sb-builder /sbapp/target/backend-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=sb-builder /backend/target/backend-0.0.1-SNAPSHOT.jar app.jar
 
 ENV PORT=8080
 EXPOSE ${PORT}
