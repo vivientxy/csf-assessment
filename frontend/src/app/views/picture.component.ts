@@ -54,6 +54,7 @@ export class PictureComponent implements OnInit {
     // send data to springboot
     this.svc.upload(formData).subscribe({
       next: resp => {
+        console.log('>>> resp:', resp)
         this.pictureUrl = '';
         this.router.navigate(['/'])
       },

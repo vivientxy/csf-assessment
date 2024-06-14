@@ -33,11 +33,8 @@ public class UploadController {
 
 		try {
 			UploadPicture pic = svc.save(picture, content);
-
-			return ResponseEntity.ok(
-				Json.createObjectBuilder().build().toString()
-			);
-	
+			JsonObject json = Json.createObjectBuilder().add("id", pic.getId().toString()).build();
+			return new ResponseEntity<>(json.toString(), HttpStatus.OK);
 		} catch (SizeException e) {
 			JsonObject json = Json.createObjectBuilder().add("message", e.getMessage()).build();
 			return new ResponseEntity<>(json.toString(), HttpStatus.PAYLOAD_TOO_LARGE);

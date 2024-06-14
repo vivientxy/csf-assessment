@@ -2,7 +2,10 @@ package ibf2023.csf.backend.models;
 
 import java.util.Date;
 
+import org.bson.types.ObjectId;
+
 public class UploadPicture {
+    private ObjectId id;
     private Date date;
     private String title;
     private String comments;
@@ -11,12 +14,19 @@ public class UploadPicture {
     
     public UploadPicture() {
     }
-    public UploadPicture(Date date, String title, String comments, String url, Long size) {
+    public UploadPicture(ObjectId id, Date date, String title, String comments, String url, Long size) {
+        this.id = id;
         this.date = date;
         this.title = title;
         this.comments = comments;
         this.url = url;
         this.size = size;
+    }
+    public ObjectId getId() {
+        return id;
+    }
+    public void setId(ObjectId id) {
+        this.id = id;
     }
     public Date getDate() {
         return date;
@@ -50,7 +60,8 @@ public class UploadPicture {
     }
     @Override
     public String toString() {
-        return "UploadPicture [date=" + date + ", title=" + title + ", comments=" + comments + ", url=" + url
-                + ", size=" + size + "]";
+        return "UploadPicture [id=" + id + ", date=" + date + ", title=" + title + ", comments=" + comments + ", url="
+                + url + ", size=" + size + "]";
     }
+
 }

@@ -33,16 +33,9 @@ public class PictureService {
 		Long thresholdInBytes = Long.valueOf(sizeThresholdInMB) * 100000;
 		Long currentMongoSize = mongoRepo.getCurrentSize();
 		Long uploadSize = picture.getSize();
-		System.out.println(">>> threshold:" + sizeThresholdInMB);
-		System.out.println(">>> thresholdInBytes:" + thresholdInBytes);
-		System.out.println(">>> currentMongoSize:" + currentMongoSize);
-		System.out.println(">>> uploadSize:" + uploadSize);
-
 		if ((uploadSize + currentMongoSize) > thresholdInBytes) {
-			System.out.println(">>> NO SPACE");
 			throw new SizeException("The upload has exceeded your monthly upload quota of " + sizeThresholdInMB + "MB");
 		}
-
 
 		// save to S3
 		String url = s3Repo.save(picture);
