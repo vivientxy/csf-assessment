@@ -1,6 +1,7 @@
 package ibf2023.csf.backend.services;
 
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,7 +42,7 @@ public class PictureService {
 		String url = s3Repo.save(picture);
 
 		// save to Mongo
-		String[] contentParts = content.split("\\|");
+		String[] contentParts = content.split(Pattern.quote("|"));
 		String title = contentParts[0];
 		String comments = contentParts[1];
 		String date = contentParts[2];

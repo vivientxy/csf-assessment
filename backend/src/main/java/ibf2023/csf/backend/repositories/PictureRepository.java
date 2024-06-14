@@ -72,6 +72,8 @@ public class PictureRepository {
 		Aggregation pipeline= Aggregation.newAggregation(match, group);
 		AggregationResults<Document> results= mongoTemplate.aggregate(pipeline, "travelpics", Document.class);
 		List<Document> docList = results.getMappedResults();
+		if (docList.size() == 0)
+			return 0L;
 		return docList.get(0).getLong("totalSize");
 	}
 
