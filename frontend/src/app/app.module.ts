@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { WebcamModule } from 'ngx-webcam';
 import { leavePicture } from './guards';
+import { UploadService } from './upload.service';
 
 const appRoutes: Routes = [
     { path: '', component: MainComponent },
@@ -27,7 +28,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes, {useHash: true}),
     WebcamModule
   ],
-  providers: [],
+  providers: [UploadService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

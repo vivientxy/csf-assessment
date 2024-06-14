@@ -20,7 +20,18 @@ public class UploadController {
 	// You may change the method signature by adding additional parameters and annotations.
 	// You cannot remove any any existing annotations and parameters from postUpload()
 	@PostMapping(path="/image/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<String> postUpload(@RequestPart MultipartFile picture) {
+	public ResponseEntity<String> postUpload(@RequestPart MultipartFile picture, @RequestPart String content) {
+
+		System.out.println(">>> picture: " + picture);
+		System.out.println(">>> content: " + content);
+
+		String[] contentParts = content.split("\\|");
+		String title = contentParts[0];
+		String comments = contentParts[1];
+		String date = contentParts[2];
+		System.out.println(">>> title: " + title);
+		System.out.println(">>> comments: " + comments);
+		System.out.println(">>> date: " + date);
 
 		return ResponseEntity.ok(
 			Json.createObjectBuilder().build().toString()

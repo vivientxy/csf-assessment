@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { dataToImage } from '../utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { UploadService } from '../upload.service';
 
 @Component({
   selector: 'app-picture',
@@ -14,7 +15,7 @@ export class PictureComponent implements OnInit {
   // TODO: Task 2
   // TODO: Task 3
 
-  private readonly http = inject(HttpClient)
+  private readonly svc = inject(UploadService)
   private readonly router = inject(Router)
   private readonly fb = inject(FormBuilder)
   private readonly activatedRoute = inject(ActivatedRoute)
@@ -28,9 +29,9 @@ export class PictureComponent implements OnInit {
     })    
     this.form = this.fb.group({
       picture: this.fb.control,
+      content: this.fb.control,
       title: this.fb.control('', [Validators.required, Validators.minLength(5)]),
-      comments: this.fb.control(''),
-      datetime: this.fb.control
+      comments: this.fb.control('')
     })
   }
 
@@ -38,18 +39,29 @@ export class PictureComponent implements OnInit {
     this.router.navigate(['/'])
   }
 
+  isPictureNotSaved() {
+    return this.pictureUrl !== '';
+  }
+
   processSubmit() {
-    // picture as JavaScript File object
-    // current datetime
-    this.form.controls['picture'].setValue(dataToImage(this.pictureUrl))
-    this.form.controls['datetime'].setValue(new Date())
-    console.log('>>> form values:', this.form.value)
+    const formData = new FormData();
+    
+    // reduce overhead of multipart form data -- combine the various fields into a pipe-separated string
+    const content = this.form.controls['title'].value + '|' + this.form.controls['comments'].value + '|' + new Date()
+    formData.append('picture', dataToImage(this.pictureUrl))
+    formData.append('content', content)
+
     // send data to springboot
-
-    // reduce overhead of multipart form data -- concat the fields into csv string
-
-
-
+    this.svc.upload(formData).subscribe({
+      next: resp => {
+        this.pictureUrl = '';
+        this.router.navigate(['/'])
+      },
+      error: err => {
+        const errMsg = err.error
+        alert(errMsg)
+      }
+    })
   }
 
 }
